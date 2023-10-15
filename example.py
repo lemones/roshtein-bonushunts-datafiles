@@ -44,7 +44,7 @@ def list_from_name(df, name, multiplier):
 
 
 if __name__ == "__main__":
-    json_dir = "Hunt_test/"
+    json_dir = "Datafiles/"
     df = load_data(json_dir)
 
     # Examples
