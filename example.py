@@ -13,8 +13,8 @@ def load_data(json_dir):
         slots_dataframe = pd.DataFrame(json_data["response"]["slots"]["slots"])
         dataframes.append(slots_dataframe)
     df = pd.concat(dataframes, ignore_index=True)
-    df = df.drop(columns=["bonushunt_slot_position", "bonushunt_slot_opened", "bonushunt_slot_next", "bonushunt_slot_currency"])
-    df = df.rename(columns={"bonushunt_slot_position": "position", "bonushunt_slot_name": "slot_name", "bonushunt_slot_provider": "provider", "bonushunt_slot_bet": "bet", "bonushunt_slot_mp": "multiplier", "bonushunt_slot_win": "win", "bonushunt_casino_name": "casino"})
+    df = df.drop(columns=["bonushunt_slot_position", "bonushunt_slot_opened", "bonushunt_slot_next"])
+    df = df.rename(columns={"bonushunt_slot_position": "position", "bonushunt_slot_name": "slot_name", "bonushunt_slot_provider": "provider", "bonushunt_slot_bet": "bet", "bonushunt_slot_mp": "multiplier", "bonushunt_slot_win": "win", "bonushunt_casino_name": "casino", "bonushunt_slot_currency": "currency"})
     return df
 
 
@@ -27,7 +27,29 @@ def count_mult(df, data):
     print(f"The rate of him hitting {data}x is once every {int(rate)} bonus")
 
 
+def over_mult(df, multiplier):
+    """Prints data for all slots for given multiplier and above"""
+    data = df[(df['multiplier'] >= multiplier) & (df['bet'] >= 500)]
+    print(f'Wins over {multiplier}x:')
+    for index, row in data.iterrows():
+        print(f'  - {row["slot_name"]}\n\tWin: {int(row["win"]):,}\n\tMultiplier: {int(row["multiplier"]):,}')
+
+
+def list_from_name(df, name, multiplier):
+    """Takes slot_name and prints data for given multiplier and above for that slot_name"""
+    data = df[(df['slot_name'].str.lower() == name) & (df['multiplier'] >= multiplier)]
+    print(f'\"{data["slot_name"].iloc[0]}\" wins over {multiplier}x:')
+    for index, row in data.iterrows():
+        print(f' - Bet: {int(row["bet"]):,}\tWin: {int(row["win"]):,}\tMultiplier: {int(row["multiplier"]):,}')
+
+
 if __name__ == "__main__":
-    json_dir = "Datafiles/"
+    json_dir = "Hunt_test/"
     df = load_data(json_dir)
-    count_mult(df, 100)
+
+    # Examples
+    count_mult(df, 5000)
+    print()
+    list_from_name(df, "wanted dead or a wild", 2000)
+    print()
+    over_mult(df, 5000)
