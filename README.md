@@ -5,4 +5,8 @@ This dataset can be used for a variety of analytics purposes, such as:
 - Analyzing Roshtein's playing style: The dataset can be used to analyze Roshtein's playing style and identify any patterns or strategies that he uses.
 
 
+Screenshot from the example.py outputs:
+![alt text](https://raw.githubusercontent.com/lemones/roshtein-bonushunts-datafiles/master/screenshot.png)
+
+
 source: https://roshtein.com/
