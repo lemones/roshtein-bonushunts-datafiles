@@ -6,6 +6,8 @@ This dataset can be used for a variety of analytics purposes, such as:
 
 
 Screenshot from the example.py outputs:
+
+
 ![alt text](https://raw.githubusercontent.com/lemones/roshtein-bonushunts-datafiles/master/screenshot.png)
 
 
